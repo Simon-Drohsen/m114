@@ -12,31 +12,31 @@
             <div class="bg-slate-100 rounded-lg w-fit opacity-80">
                 <div class="w-fit px-3 mx-auto">
                     <h2 class="text-2xl mb-8">Wähle, welche Umrechnungen du durchführen möchtest</h2>
-                    <form action="submit.php" method="post">
+                    <form action="index.php" method="post">
                         <div class="grid auto-rows-max gap-4 mb-4">
                             <div class="grid grid-cols-2">
                                 <label for="decToBin">Dezimal zu Binär:</label>
-                                <input class="rounded-md py-0.5 px-2" type="checkbox" id="decToBin" name="choose">
+                                <input class="rounded-md py-0.5 px-2" type="checkbox" id="decToBin" value="decToBin" name="choose[]">
                             </div>
                             <div class="grid grid-cols-2">
                                 <label for="binToDec">Binär zu Dezimal:</label>
-                                <input class="rounded-md py-0.5 px-2" type="checkbox" id="binToDec" name="choose">
+                                <input class="rounded-md py-0.5 px-2" type="checkbox" id="binToDec" value="binToDec" name="choose[]">
                             </div>
                             <div class="grid grid-cols-2">
                                 <label for="decToHex">Dezimal zu Hexadezimal:</label>
-                                <input class="rounded-md py-0.5 px-2" type="checkbox" id="decToHex" name="choose">
+                                <input class="rounded-md py-0.5 px-2" type="checkbox" id="decToHex" value="decToHex" name="choose[]">
                             </div>
                             <div class="grid grid-cols-2">
                                 <label for="hexToDec">Hexadezimal zu Dezimal:</label>
-                                <input class="rounded-md py-0.5 px-2" type="checkbox" id="hexToDec" name="choose">
+                                <input class="rounded-md py-0.5 px-2" type="checkbox" id="hexToDec" value="hexToDec" name="choose[]">
                             </div>
                             <div class="grid grid-cols-2">
                                 <label for="binToHex">Binär zu Hexadezimal:</label>
-                                <input class="rounded-md py-0.5 px-2" type="checkbox" id="binToHex" name="choose">
+                                <input class="rounded-md py-0.5 px-2" type="checkbox" id="binToHex" value="binToHex" name="choose[]">
                             </div>
                             <div class="grid grid-cols-2">
                                 <label for="hexToBin">Hexadezimal zu Binär:</label>
-                                <input class="rounded-md py-0.5 px-2" type="checkbox" id="hexToBin" name="choose">
+                                <input class="rounded-md py-0.5 px-2" type="checkbox" id="hexToBin" value="hexToBin" name="choose[]">
                             </div>
                         </div>
                         <button class="text-left rounded-full bg-sky-500 py-1 px-3 w-fit mb-4" type="submit">Submit</button>
