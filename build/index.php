@@ -63,11 +63,11 @@ function decToBin(string $dec, bool $twoFunc = true):string {
 
 function binToDec(string $bin, bool $twoFunc = true, bool $lb = true):string {
     $title = "";
-    $lb = "";
+    $br = "";
     if ($twoFunc) {
         $title = "<h3>Binary to Decimal</h3>";
     } elseif($lb) {
-        $lb = "<br><br>";
+        $br = "<br><br>";
     }
     $arr = str_split(strrev($bin));
     $dec = 0;
@@ -91,7 +91,7 @@ function binToDec(string $bin, bool $twoFunc = true, bool $lb = true):string {
     $result = implode("<br>", $array);
     $countValue = $countString . " = " . $dec;
 
-    echo $lb . $title . $result . "<br>Decimal: " . $countValue;
+    echo $br . $title . $result . "<br>Decimal: " . $countValue;
     return $dec;
 }
 
@@ -132,16 +132,17 @@ function decToHex(string $dec, bool $twoFunc = true):string {
         $arr[] = $showDec . " / 16 = " . $dec . " R: " . $r;
         $showDec = $dec;
     }
-    echo "<br>" . $title . implode("<br>",$arr) . "<br>Hexadecimal: " . $hex;
+    echo "<br>" . $title . implode("<br>",$arr) . "<br>Hexadecimal: " . $hex . "<br>";
     return $hex;
 }
 
 function hexToDec(string $hex, bool $twoFunc = true, bool $lb = true):string {
     $title = "";
+    $br = "";
     if ($twoFunc) {
         $title = "<h3>Hexadecimal to Decimal</h3>";
     } elseif($lb) {
-        $lb = "<br><br>";
+        $br = "<br><br>";
     }
     $arr = str_split(strrev($hex));
     $dec = 0;
@@ -186,7 +187,7 @@ function hexToDec(string $hex, bool $twoFunc = true, bool $lb = true):string {
         }
         $countValue .= $countArr[$i]." + ";
     }
-    echo $lb . $title . $result . "<br>Decimal: " . $countValue. $dec;
+    echo $br . $title . $result . "<br>Decimal: " . $countValue. $dec;
     return $dec;
 }
 
@@ -222,8 +223,8 @@ function hexToBin(string $hex):string {
     </head>
     <body>
         <section class="mx-auto sm:w-fit flex justify-center items-center h-screen">
-            <div class="bg-slate-100 rounded-lg w-fit opacity-80">
-                <div class="w-fit px-3 mx-auto">
+            <div class="bg-slate-100 rounded-lg w-fit">
+                <div class="w-fit px-3 mx-auto h-fit">
                     <?php returnSum() ?>
                 </div>
             </div>
