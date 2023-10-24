@@ -1,41 +1,53 @@
 <?php
 
-$decToBin = false;
-$binToDec = false;
-$decToHex = false;
-$hexToDec = false;
-$binToHex = false;
-$hexToBin = false;
+function returnSum():void {
+    $wichFunc = [
+            'decToBin' => false,
+            'binToDec' => false,
+            'decToHex' => false,
+            'hexToDec' => false,
+            'binToHex' => false,
+            'hexToBin' => false,
+    ];
 
-foreach ($_POST['choose'] as $value) {
-    switch ($value) {
-        case 'decToBin':
-            $decToBin = true;
-            break;
-        case 'binToDec':
-            $binToDec = true;
-            break;
-        case 'decToHex':
-            $decToHex = true;
-            break;
-        case 'hexToDec':
-            $hexToDec = true;
-            break;
-        case 'binToHex':
-            $binToHex = true;
-            break;
-        case 'hexToBin':
-            $hexToBin = true;
-            break;
+    foreach ($_POST['equation'] as $func) {
+        $key = array_search($func, $_POST['equation']);
+        if ($func !== "") {
+            $wichFunc[$key] = true;
+
+            switch ($key) {
+                case 'decToBin':
+                    decToBin(strval($_POST['equation'][$key]));
+                    break;
+                case 'binToDec':
+                    binToDec(strval($_POST['equation'][$key]));
+                    break;
+                case 'decToHex':
+                    decToHex(strval($_POST['equation'][$key]));
+                    break;
+                case 'hexToDec':
+                    hexToDec(strval($_POST['equation'][$key]));
+                    break;
+                case 'binToHex':
+                    binToHex(strval($_POST['equation'][$key]));
+                    break;
+                case 'hexToBin':
+                    hexToBin(strval($_POST['equation'][$key]));
+                    break;
+            }
+        } else {
+            array_shift($wichFunc);
+        }
     }
 }
+
 function decToBin(string $dec, bool $twoFunc = true):string {
     $title = "";
     if ($twoFunc) {
-        $title = "<h4>Decimal to Binary</h4>";
+        $title = "<h3>Decimal to Binary</h3>";
     }
     $dec = intval($dec);
-    $bin = '0';
+    $bin = '';
     $arr = [];
     $showDec = $dec;
     while ($dec > 0) {
@@ -45,7 +57,7 @@ function decToBin(string $dec, bool $twoFunc = true):string {
         $arr[] = $showDec . " / 2 = " . $dec . " R: " . $r;
         $showDec = $dec;
     }
-    echo "<br><br>" . $title . implode("<br>",$arr) . "<br>Binary: " . strrev($bin);
+    echo "<br><br>" . $title . implode("<br>",$arr) . "<br>Binary: " . $bin;
     return strrev($bin);
 }
 
@@ -53,7 +65,7 @@ function binToDec(string $bin, bool $twoFunc = true, bool $lb = true):string {
     $title = "";
     $lb = "";
     if ($twoFunc) {
-        $title = "<h4>Binary to Decimal</h4>";
+        $title = "<h3>Binary to Decimal</h3>";
     } elseif($lb) {
         $lb = "<br><br>";
     }
@@ -62,32 +74,31 @@ function binToDec(string $bin, bool $twoFunc = true, bool $lb = true):string {
     $count = 1;
     $array = [];
     $countArr = [];
+    $countString = "";
+
     foreach ($arr as $bit) {
         $bit = intval($bit);
         if($bit === 1) {
             $dec += ($bit * $count);
+            $countString .= $count . " + ";
         }
         array_push($array, ($bit . " * " . $count . " = " . ($bit * $count)));
         array_push($countArr, $dec);
         $count *= 2;
     }
-    $result = implode("<br>",$array);
-    $countValue = "";
 
-    for ($i = 1; $i < count($countArr); $i++) {
-        if ($i === count($countArr) - 2){
-            $countValue .= $countArr[$i-1]." = ";
-            break;
-        }
-        $countValue .= $countArr[$i-1]." + ";
-    }
-    echo $lb . $title . $result . "<br>Decimal: " . $countValue . $dec;
+    $countString = rtrim($countString, " +");
+    $result = implode("<br>", $array);
+    $countValue = $countString . " = " . $dec;
+
+    echo $lb . $title . $result . "<br>Decimal: " . $countValue;
     return $dec;
 }
 
+
 function decToHex(string $dec, bool $twoFunc = true):string {
     $title = "";
-    if ($twoFunc) $title = "<h4>Decimal to Hexadecimal</h4>";
+    if ($twoFunc) $title = "<h3>Decimal to Hexadecimal</h3>";
     $dec = intval($dec);
     $hex = '';
     $arr = [];
@@ -128,7 +139,7 @@ function decToHex(string $dec, bool $twoFunc = true):string {
 function hexToDec(string $hex, bool $twoFunc = true, bool $lb = true):string {
     $title = "";
     if ($twoFunc) {
-        $title = "<h4>Decimal to Binary</h4>";
+        $title = "<h3>Hexadecimal to Decimal</h3>";
     } elseif($lb) {
         $lb = "<br><br>";
     }
@@ -180,13 +191,13 @@ function hexToDec(string $hex, bool $twoFunc = true, bool $lb = true):string {
 }
 
 function binToHex(string $bin):string {
-    echo "<br><h4>Binary to Hexadecimal</h4>";
+    echo "<br><h3>Binary to Hexadecimal</h3>";
     $dec = binToDec($bin, false, false);
     return decToHex($dec, false);
 }
 
 function hexToBin(string $hex):string {
-    echo "<br><h4>Hexadecimal to Binary</h4>";
+    echo "<br><h3>Hexadecimal to Binary</h3>";
     $dec = hexToDec($hex, false, false);
     return decToBin($dec, false);
 }
@@ -213,42 +224,7 @@ function hexToBin(string $hex):string {
         <section class="mx-auto sm:w-fit flex justify-center items-center h-screen">
             <div class="bg-slate-100 rounded-lg w-fit opacity-80">
                 <div class="w-fit px-3 mx-auto">
-                    <h2 class="text-2xl mb-8">Wähle, welche Umrechnungen du durchführen möchtest</h2>
-                    <form action="index.php" method="post">
-                        <div class="grid auto-rows-max gap-4 mb-4">
-                            <div class="grid grid-cols-2">
-                                <label for="decToBin" <?php if ($decToBin !== true):?> hidden <?php endif;?>>Dezimal zu Binär:
-                                    <input class="rounded-md py-0.5 px-2" type="text" id="decToBin" name="choose[]">
-                                </label>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <label for="binToDec" <?php if ($binToDec !== true):?> hidden <?php endif;?>>Binär zu Dezimal:
-                                    <input class="rounded-md py-0.5 px-2" type="text" id="binToDec" name="choose[]">
-                                </label>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <label for="decToHex" <?php if ($decToHex !== true):?> hidden <?php endif;?>>Dezimal zu Hexadezimal:
-                                    <input class="rounded-md py-0.5 px-2" type="text" id="decToHex" name="choose[]">
-                                </label>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <label for="hexToDec" <?php if ($hexToDec !== true):?> hidden <?php endif;?>>Hexadezimal zu Dezimal:
-                                    <input class="rounded-md py-0.5 px-2" type="text" id="hexToDec" name="choose[]">
-                                </label>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <label for="binToHex" <?php if ($binToHex !== true):?> hidden <?php endif;?>>Binär zu Hexadezimal:
-                                    <input class="rounded-md py-0.5 px-2" type="text" id="binToHex" name="choose[]">
-                                </label>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <label for="hexToBin" <?php if ($hexToBin !== true):?> hidden <?php endif;?>>Hexadezimal zu Binär:
-                                    <input class="rounded-md py-0.5 px-2" type="text" id="hexToBin" name="choose[]">
-                                </label>
-                            </div>
-                        </div>
-                        <button class="text-left rounded-full bg-sky-500 py-1 px-3 w-fit mb-4" type="submit">Submit</button>
-                    </form>
+                    <?php returnSum() ?>
                 </div>
             </div>
         </section>
